@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -242,6 +243,7 @@ export function CategoriesTable({
               <th>Status</th>
               <th>Sort</th>
               <th>Created</th>
+              <th>Actions</th>
             </tr>
           </thead>
 
@@ -249,7 +251,7 @@ export function CategoriesTable({
             {categories.length === 0 ? (
               <tr>
                 <td
-                  colSpan={10}
+                  colSpan={11}
                   style={{
                     padding: 24,
                     color: "var(--muted)",
@@ -305,6 +307,24 @@ export function CategoriesTable({
                   <td>{category.sortOrder}</td>
 
                   <td>{formatDate(category.createdAt)}</td>
+
+                  <td>
+                    <Link
+                      href={`/admin/categories/${category.id}`}
+                      className="btn-secondary"
+                      style={{
+                        minHeight: 34,
+                        padding: "8px 12px",
+                        fontSize: 12,
+                        display: "inline-flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      Edit
+                    </Link>
+                  </td>
                 </tr>
               ))
             )}
