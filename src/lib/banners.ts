@@ -1,6 +1,9 @@
+import { unstable_noStore as noStore } from "next/cache";
 import { db } from "./db";
 
 export async function getActiveHeroBanners() {
+  noStore();
+
   const now = new Date();
 
   return db.banner.findMany({

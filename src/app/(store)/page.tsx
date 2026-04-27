@@ -4,6 +4,9 @@ import { HomeReviewSlider } from "../../components/store/home-review-slider";
 import { HomeHeroSection } from "../../components/store/home-hero-section";
 import { ScrollReveal } from "../../components/store/scroll-reveal";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 const COLLECTION_CARD_CONFIG = [
   {
     key: "world-cup",
