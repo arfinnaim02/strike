@@ -20,11 +20,10 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
       <main className="auth-shell">
         <section className="container auth-grid">
           <div className="auth-copy">
-            <div className="lux-eyebrow">Customer Login</div>
+            <div className="lux-eyebrow">Account Login</div>
             <h1 className="auth-title">Access your Strike account</h1>
             <p className="auth-text">
-              Login to view your order history, saved details, wishlist, and
-              checkout faster next time.
+              Login to access your customer account or admin dashboard based on your role.
             </p>
 
             <div className="auth-benefits">

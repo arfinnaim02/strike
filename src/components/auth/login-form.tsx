@@ -4,6 +4,15 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
+const ADMIN_ROLES = [
+  "SUPER_ADMIN",
+  "ADMIN",
+  "ORDER_MANAGER",
+  "INVENTORY_MANAGER",
+  "CONTENT_MANAGER",
+  "CUSTOMER_SUPPORT",
+];
+
 export function LoginForm({
   callbackUrl = "/account",
 }: {
@@ -19,10 +28,7 @@ export function LoginForm({
 
     const formData = new FormData(event.currentTarget);
 
-    const email = String(formData.get("email") || "")
-      .trim()
-      .toLowerCase();
-
+    const email = String(formData.get("email") || "").trim().toLowerCase();
     const password = String(formData.get("password") || "");
 
     setError("");
@@ -32,7 +38,6 @@ export function LoginForm({
       email,
       password,
       redirect: false,
-      callbackUrl,
     });
 
     if (result?.error) {
@@ -41,7 +46,20 @@ export function LoginForm({
       return;
     }
 
-    router.push(callbackUrl);
+    const sessionRes = await fetch("/api/auth/session");
+    const session = await sessionRes.json();
+
+    const role = session?.user?.role;
+    const isAdmin = ADMIN_ROLES.includes(role);
+
+    if (callbackUrl && callbackUrl !== "/account") {
+      router.push(callbackUrl);
+    } else if (isAdmin) {
+      router.push("/admin/dashboard");
+    } else {
+      router.push("/account");
+    }
+
     router.refresh();
   }
 
@@ -49,12 +67,7 @@ export function LoginForm({
     <form onSubmit={handleSubmit} style={{ display: "grid", gap: 16 }}>
       <div style={{ display: "grid", gap: 8 }}>
         <label>Email</label>
-        <input
-          name="email"
-          type="email"
-          placeholder="you@email.com"
-          required
-        />
+        <input name="email" type="email" placeholder="you@email.com" required />
       </div>
 
       <div style={{ display: "grid", gap: 8 }}>

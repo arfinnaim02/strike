@@ -71,7 +71,15 @@ export function HomeHeroSection({ banners }: Props) {
 
   return (
     <section className="lux-hero">
-      <HomeHeroShowcase banners={safeBanners} onSlideChange={setActiveBanner} />
+            <HomeHeroShowcase
+        banners={safeBanners}
+        onSlideChange={(banner) => {
+          setActiveBanner((current) => {
+            if (current.id === banner.id) return current;
+            return banner;
+          });
+        }}
+      />
 
       <div className="container">
         <div className="lux-hero-grid">
